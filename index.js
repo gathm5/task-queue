@@ -27,11 +27,12 @@ class TaskQueue {
   _execute() {
     const popped = this.QUEUE.shift();
     if (popped) {
-      popped();
-      const fill = this.QUEUE_OVERFLOW.shift();
-      if (fill) {
-        this.QUEUE.push(fill);
-      }
+      popped(() => {
+        const fill = this.QUEUE_OVERFLOW.shift();
+        if (fill) {
+          this.QUEUE.push(fill);
+        }
+      });
       this._run();
     }
   }
