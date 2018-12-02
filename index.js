@@ -9,19 +9,22 @@ class TaskQueue {
     if (typeof fn === 'function') {
       if (this.THRESHOLD_POINT && this.QUEUE.length === this.THRESHOLD_POINT) {
         this.QUEUE_OVERFLOW.push(fn);
-        this.run();
+        this._run();
         return;
       }
       this.QUEUE.push(fn);
-      this.run();
+      this._run();
     }
   }
-  run() {
+  add(fn) {
+    this.insert(fn);
+  }
+  _run() {
     if (!this.isExecuting) {
-      this.execute();
+      this._execute();
     }
   }
-  execute() {
+  _execute() {
     const popped = this.QUEUE.shift();
     if (popped) {
       popped();
@@ -29,7 +32,9 @@ class TaskQueue {
       if (fill) {
         this.QUEUE.push(fill);
       }
-      this.run();
+      this._run();
     }
   }
 }
+
+module.exports = TaskQueue;
