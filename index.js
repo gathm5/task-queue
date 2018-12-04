@@ -27,6 +27,7 @@ class TaskQueue {
       }
       this._log('TQ - INSERT INTO MAIN QUEUE', Date.now())
       this.QUEUE.push(fn);
+      this._run();
     }
   }
   add(fn) {
