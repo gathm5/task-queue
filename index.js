@@ -1,5 +1,5 @@
 class TaskQueue {
-  constructor(threshold, run = true) {
+  constructor(threshold, run = false) {
     this.QUEUE = [];
     this.isPaused = run;
     this.QUEUE_OVERFLOW = [];
