@@ -12,7 +12,7 @@ const Queue = require('task-queue');
 Create an instance of the queue
 
 ```
-const queue = new Queue(1);
+const queue = Queue();
 ```
 `queue` will allow you to run 1 task at a time
 
