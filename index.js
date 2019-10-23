@@ -1,36 +1,27 @@
-const allowNext = (fn) => {
-  if (typeof fn !== 'function') throw new Error();
-};
-
-const Queue = () => {
-  let pause = false;
-  let running = false;
-  const tasks = [];
-  const execute = () => {
-    if (running) return;
-    running = true;
-    const task = tasks.shift();
-    if (task) {
-      task(() => {
-        running = false;
-        if (!pause) {
+module.exports = () => {
+  let pause = false,
+    running = false;
+  const tasks = [],
+    execute = () => {
+      if (running || pause) return;
+      running = true;
+      const task = tasks.shift();
+      if (task)
+        task(() => {
+          running = false;
           execute();
-        }
-      });
-    }
-  };
+        });
+    };
   return Object.freeze({
-    add: (fn) => {
-      allowNext(fn);
-      tasks.push(fn);
-      execute();
-    },
-    pause: () => { pause = true; },
+    pause: () => (pause = true),
     resume: () => {
       pause = false;
       execute();
     },
+    add: fn => {
+      if (typeof fn !== 'function') throw new Error('Provide a callback function');
+      tasks.push(fn);
+      execute();
+    }
   });
 };
-
-module.exports = Queue;

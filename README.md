@@ -21,17 +21,17 @@ const queue = Queue();
 // Task 1
 queue.add((done) => {
   console.log('Task A');
-  done(); // IMPORTANT
+  done(); // Call done() to release the lock for the next task in line
 });
 
 // Task 2
 queue.add((done) => {
   console.log('Task B');
-  done(); // IMPORTANT
+  done(); // Call done() to release the lock for the next task in line
 });
 ```
 
-## PS: `done()` should be called inside the `queue.add(cb)` callback function.
+### PS: `done()` should be called inside the `queue.add(cb)` callback function.
 
 ### Options
 
